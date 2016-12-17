@@ -1,40 +1,59 @@
 import json
+import os
 
 
 def load_data(filepath):
-    data_dict = {}
+    if not os.path.exists(filepath):
+        return None
     with open(filepath) as json_file:
         data_dict = json.load(json_file)
     return data_dict
 
 
 def get_biggest_bar(data):
-    big_bar = sorted(data, key=lambda k: k['SeatsCount'], reverse=True)
-    print(big_bar[0]['Name'])
-
+    try:
+        big_bar = max(data, key=lambda k: k['SeatsCount'])
+        return big_bar['Name']
+    except TypeError:
+        pass
 
 def get_smallest_bar(data):
-    min_bar = sorted(data, key=lambda k: k['SeatsCount'])
-    print(min_bar[0]['Name'])
-
+    try:
+        min_bar = min(data, key=lambda k: k['SeatsCount'])
+        return min_bar['Name']
+    except TypeError:
+        pass
 
 def get_closest_bar(data, longitude, latitude):
-    for bar in data:
-        bar['distance_key'] = euqlid(float(bar['Longitude_WGS84']), float(bar['Latitude_WGS84']), longitude, latitude)
-    closest_bar = sorted(data, key=lambda k: k['distance_key'])
-    print(closest_bar[0]['Name'])
+    try:
+        for bar in data:
+            bar['distance_key'] = calculation_euclidean_distance(float(bar['Longitude_WGS84']),
+                                                                 float(bar['Latitude_WGS84'])
+                                                                 , longitude, latitude)
+        closest_bar = min(data, key=lambda k: k['distance_key'])
+        return closest_bar['Name']
+    except TypeError:
+        pass
 
 
-def euqlid(longitude, latitude, x1, y1):
-    d = (((longitude-x1)**2)+((latitude-y1)**2))**0.5
-    return d
+def calculation_euclidean_distance(longitude, latitude, x1, y1):
+    try:
+        d = (((longitude-x1)**2)+((latitude-y1)**2))**0.5
+        return d
+    except ValueError:
+        pass
 
 
-long = float(input("Введите долготу "))
-lat = float(input("Введите ширину "))
-data_input = load_data('data.json')
-get_biggest_bar(data_input)
-get_smallest_bar(data_input)
-get_closest_bar(data_input, long, lat)
 if __name__ == '__main__':
-    pass
+    file = input("Введите имя файла(путь к файлу) ")
+    try:
+        latitude = float(input('Введите широту: '))
+        longitude = float(input("Введите longitude "))
+    except ValueError:
+        latitude = None
+        longitude = None
+    data_input = load_data(file)
+    print("Самый большой бар = {0} \n"
+          "Самый маленький бар = {1} \n"
+          "Самый близкий бар = {2}".format(get_biggest_bar(data_input), get_smallest_bar(data_input),
+                                           get_closest_bar(data_input, longitude, latitude)))
