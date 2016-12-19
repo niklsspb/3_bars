@@ -38,8 +38,8 @@ def get_closest_bar(data, longitude, latitude):
 
 def calculation_euclidean_distance(longitude, latitude, x1, y1):
     try:
-        d = (((longitude-x1)**2)+((latitude-y1)**2))**0.5
-        return d
+        distance = (((longitude-x1)**2)+((latitude-y1)**2))**0.5
+        return distance
     except ValueError:
         pass
 
