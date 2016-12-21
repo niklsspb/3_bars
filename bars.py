@@ -36,9 +36,9 @@ def get_closest_bar(data, longitude, latitude):
         pass
 
 
-def calculation_euclidean_distance(longitude, latitude, x1, y1):
+def calculation_euclidean_distance(longitude_json, latitude_json, longitude, latitude):
     try:
-        distance = (((longitude-x1)**2)+((latitude-y1)**2))**0.5
+        distance = (((longitude_json-longitude)**2)+((latitude_json-latitude)**2))**0.5
         return distance
     except ValueError:
         pass
