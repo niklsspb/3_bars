@@ -6,8 +6,8 @@ def load_data(filepath):
     if not os.path.exists(filepath):
         return None
     with open(filepath) as json_file:
-        data_dict = json.load(json_file)
-    return data_dict
+        data_dictionary = json.load(json_file)
+    return data_dictionary
 
 
 def get_biggest_bar(data):
