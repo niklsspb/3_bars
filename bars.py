@@ -47,7 +47,7 @@ def calculation_euclidean_distance(longitude_json, latitude_json, longitude, lat
 if __name__ == '__main__':
     file = input("Введите имя файла(путь к файлу) ")
     try:
-        latitude = float(input('Введите широту: '))
+        latitude = float(input('Введите latitude : '))
         longitude = float(input("Введите longitude "))
     except ValueError:
         latitude = None
