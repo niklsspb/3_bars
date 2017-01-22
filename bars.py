@@ -35,11 +35,14 @@ def calculate_the_euclidean_distance(longitude_json, latitude_json, input_user_l
 
 
 if __name__ == '__main__':
-    input_file_name = input("Введите имя файла(путь к файлу) ")
-    latitude = float(input('Введите latitude : '))
-    longitude = float(input("Введите longitude "))
-    data_input = load_data(input_file_name)
-    print("Самый большой бар = {0} \n"
-          "Самый маленький бар = {1} \n"
-          "Самый близкий бар = {2}".format(get_biggest_bar(data_input), get_smallest_bar(data_input),
-                                           get_closest_bar(data_input, longitude, latitude)))
+    try:
+        input_file_name = input("Введите имя файла(путь к файлу) ")
+        latitude = input('Введите latitude : ')
+        longitude = input("Введите longitude ")
+        data_input = load_data(input_file_name)
+        print("Самый большой бар = {0} \n"
+              "Самый маленький бар = {1} \n"
+              "Самый близкий бар = {2}".format(get_biggest_bar(data_input), get_smallest_bar(data_input),
+                                               get_closest_bar(data_input, float(longitude), float(latitude))))
+    except ValueError:
+        print ("Исходные данные были указаны не верны. Значения latitude и longitude только числа")
